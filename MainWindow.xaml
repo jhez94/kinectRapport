@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Body Basics" 
-        Height="600" Width="700" 
+        Height="1000" Width="1500" 
         Loaded="MainWindow_Loaded"
         Closing="MainWindow_Closing"> 
   <Window.Resources>
@@ -28,16 +28,26 @@
     <StatusBar Grid.Row="2" HorizontalAlignment="Stretch" Name="statusBar" VerticalAlignment="Bottom" Background="White" Foreground="{StaticResource MediumGreyBrush}">
       <StatusBarItem Content="{Binding StatusText}" />
     </StatusBar>
-        <ProgressBar x:Name="progressBar2" HorizontalAlignment="Left" Height="50" Margin="297,26,0,0" Grid.Row="1" VerticalAlignment="Top" Width="300" ValueChanged="ProgressBar_ValueChanged_1" RenderTransformOrigin="0.5,0.5" Foreground="#FF09BB00" Background="#FFFBFBFB" Opacity="0.6">
+        <ProgressBar x:Name="progressBar2" Height="50" Margin="666,26,231,0" Grid.Row="1" VerticalAlignment="Top" ValueChanged="ProgressBar_ValueChanged_1" RenderTransformOrigin="0.5,0.5" Foreground="#FF09BB00" Background="#FFFBFBFB" Opacity="0.6" Width="575" Maximum="575">
             <ProgressBar.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleY="1" ScaleX="-1"/>
-                    <SkewTransform AngleY="0" AngleX="0"/>
+                    <SkewTransform/>
                     <RotateTransform Angle="-360"/>
                     <TranslateTransform/>
                 </TransformGroup>
             </ProgressBar.RenderTransform>
         </ProgressBar>
-        <ProgressBar x:Name="progressBar1" HorizontalAlignment="Left" Height="50" Margin="76,26,0,0" Grid.Row="1" VerticalAlignment="Top" Width="300" Opacity="0.6" ValueChanged="ProgressBar_ValueChanged_2" Foreground="#FF09BB00"/>
+        <ProgressBar x:Name="progressBar1" Height="50" Margin="230,26,667,0" Grid.Row="1" VerticalAlignment="Top" Opacity="0.6" ValueChanged="ProgressBar_ValueChanged_2" Foreground="#FF09BB00" RenderTransformOrigin="0.5,0.5" Width="575" Maximum="575">
+            <ProgressBar.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ProgressBar.RenderTransform>
+        </ProgressBar>
+        <TextBlock x:Name="rapportLoveText" HorizontalAlignment="Left" Margin="250,81,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Aww, you guys love each other! " VerticalAlignment="Top" Foreground="#FFF51D1D" Visibility="Hidden"/>
     </Grid>
 </Window>

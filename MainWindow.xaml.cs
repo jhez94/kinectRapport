@@ -380,20 +380,33 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                         }
                     }
 
-                    if (GBVar.body1 != null)// && GBVar.body2 != null)// && MyGlobalVariables.body1.IsTracked && MyGlobalVariables.body2.IsTracked)
+                    if (GBVar.body1 != null && GBVar.body2 != null)// && MyGlobalVariables.body1.IsTracked && MyGlobalVariables.body2.IsTracked)
                     {
                         var body1Orient = GBVar.body1.JointOrientations[JointType.SpineShoulder].Orientation.W;
                         var body2Orient = GBVar.body2.JointOrientations[JointType.SpineShoulder].Orientation.W;
-                        var body1OrientRapportScore = body1Orient / 0.5; //maximum is ~0.5
-                        var body2OrientRapportScore = body2Orient / 0.5;
+                        var body1body2DistanceZ = Math.Abs(Math.Abs(GBVar.body1.Joints[JointType.SpineMid].Position.Z) - Math.Abs(GBVar.body2.Joints[JointType.SpineMid].Position.Z));
+                        var body1OrientRapportScore = Math.Abs(body1Orient / 0.6) - body1body2DistanceZ; //maximum is ~0.5
+                        var body2OrientRapportScore = Math.Abs(body2Orient / 0.6) - body1body2DistanceZ;
                         //Console.WriteLine("body1Orient: " + body1Orient1);
                         //Console.WriteLine("body1Orient: " + body2Orient1);
 
-                        var body1body2Distance = Math.Abs(GBVar.body1.Joints[JointType.SpineShoulder].Position.X) + Math.Abs(GBVar.body2.Joints[JointType.SpineShoulder].Position.X);
-                        var body1body2DistanceRapportScore = Math.Sqrt(Math.Sqrt(1 / body1body2Distance)) / 2.3; //maximum is ~2.3
+                        var body1body2DistanceX = Math.Abs(GBVar.body1.Joints[JointType.SpineShoulder].Position.X) + Math.Abs(GBVar.body2.Joints[JointType.SpineShoulder].Position.X);
+                        var body1body2DistanceRapportScore = Math.Sqrt(Math.Sqrt(1 / body1body2DistanceX)) / .97; //maximum, given that center of body is tracked, not edges
 
-                        progressBar1.Value = Math.Abs((int)((body1OrientRapportScore + body1body2DistanceRapportScore / 2) * 100));
-                        progressBar2.Value = Math.Abs((int)((body2OrientRapportScore + body1body2DistanceRapportScore / 2) * 100));
+                        //value/score is simply the average of the two conditions
+                        progressBar1.Value = (int)Math.Abs((body1OrientRapportScore*0.3 + body1body2DistanceRapportScore*0.7) * 575);
+                        progressBar2.Value = (int)Math.Abs((body2OrientRapportScore*0.3 + body1body2DistanceRapportScore*0.7) * 575);
+
+                        if (progressBar1.Value + progressBar2.Value > 1020)
+                        {
+                            rapportLoveText.Visibility = System.Windows.Visibility.Visible;
+                            GBVar.rapoor = true;
+                        }
+                        else{
+                            rapportLoveText.Visibility = System.Windows.Visibility.Hidden;
+                            GBVar.rapoor = false;
+                        }
+
                         
                         //Console.WriteLine("progressBar1Value: " + Math.Abs((int)(body1Orient / 0.5) * 100));
                         //Console.WriteLine("progressBar2Value: " + Math.Abs((int)(body2Orient / 0.5) * 100));
